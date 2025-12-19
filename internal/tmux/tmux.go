@@ -227,6 +227,22 @@ func (t *Tmux) DisplayMessageDefault(session, message string) error {
 	return t.DisplayMessage(session, message, 5000)
 }
 
+// SendNotificationBanner sends a visible notification banner to a tmux session.
+// This interrupts the terminal to ensure the notification is seen.
+// Uses echo to print a boxed banner with the notification details.
+func (t *Tmux) SendNotificationBanner(session, from, subject string) error {
+	// Build the banner text
+	banner := fmt.Sprintf(`echo '
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📬 NEW MAIL from %s
+Subject: %s
+Run: bd mail inbox
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+'`, from, subject)
+
+	return t.SendKeys(session, banner)
+}
+
 // GetSessionInfo returns detailed information about a session.
 func (t *Tmux) GetSessionInfo(name string) (*SessionInfo, error) {
 	format := "#{session_name}|#{session_windows}|#{session_created_string}|#{session_attached}"

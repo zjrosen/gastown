@@ -83,7 +83,7 @@ func (r *Router) GetMailbox(address string) (*Mailbox, error) {
 }
 
 // notifyRecipient sends a notification to a recipient's tmux session.
-// Uses display-message for non-disruptive notification.
+// Uses send-keys to echo a visible banner to ensure notification is seen.
 // Supports mayor/, rig/polecat, and rig/refinery addresses.
 func (r *Router) notifyRecipient(msg *Message) error {
 	sessionID := addressToSessionID(msg.To)
@@ -97,9 +97,8 @@ func (r *Router) notifyRecipient(msg *Message) error {
 		return nil // No active session, skip notification
 	}
 
-	// Display notification in status line (non-disruptive)
-	notification := fmt.Sprintf("[MAIL] From %s: %s", msg.From, msg.Subject)
-	return r.tmux.DisplayMessageDefault(sessionID, notification)
+	// Send visible notification banner to the terminal
+	return r.tmux.SendNotificationBanner(sessionID, msg.From, msg.Subject)
 }
 
 // addressToSessionID converts a mail address to a tmux session ID.
