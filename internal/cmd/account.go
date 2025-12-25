@@ -21,8 +21,9 @@ var (
 )
 
 var accountCmd = &cobra.Command{
-	Use:   "account",
-	Short: "Manage Claude Code accounts",
+	Use:     "account",
+	GroupID: GroupConfig,
+	Short:   "Manage Claude Code accounts",
 	Long: `Manage multiple Claude Code accounts for Gas Town.
 
 This enables switching between accounts (e.g., personal vs work) with

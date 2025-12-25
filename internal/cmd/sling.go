@@ -13,8 +13,9 @@ import (
 )
 
 var slingCmd = &cobra.Command{
-	Use:   "sling <bead-id> [target]",
-	Short: "Hook work and start immediately (no restart)",
+	Use:     "sling <bead-id> [target]",
+	GroupID: GroupWork,
+	Short:   "Hook work and start immediately (no restart)",
 	Long: `Sling work onto an agent's hook and start working immediately.
 
 Unlike 'gt handoff', sling does NOT restart the session. It:

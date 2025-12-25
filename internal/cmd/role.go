@@ -34,8 +34,9 @@ type RoleInfo struct {
 }
 
 var roleCmd = &cobra.Command{
-	Use:   "role",
-	Short: "Show or manage agent role",
+	Use:     "role",
+	GroupID: GroupAgents,
+	Short:   "Show or manage agent role",
 	Long: `Display the current agent role and its detection source.
 
 Role is determined by:

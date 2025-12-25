@@ -16,8 +16,9 @@ var (
 )
 
 var doctorCmd = &cobra.Command{
-	Use:   "doctor",
-	Short: "Run health checks on the workspace",
+	Use:     "doctor",
+	GroupID: GroupDiag,
+	Short:   "Run health checks on the workspace",
 	Long: `Run diagnostic checks on the Gas Town workspace.
 
 Doctor checks for common configuration issues, missing files,

@@ -21,6 +21,7 @@ const DeaconSessionName = "gt-deacon"
 var deaconCmd = &cobra.Command{
 	Use:     "deacon",
 	Aliases: []string{"dea"},
+	GroupID: GroupAgents,
 	Short:   "Manage the Deacon session",
 	Long: `Manage the Deacon tmux session.
 
@@ -156,7 +157,8 @@ func startDeaconSession(t *tmux.Tmux) error {
 	// Launch Claude directly (no shell respawn loop)
 	// Restarts are handled by daemon via ensureDeaconRunning on each heartbeat
 	// The startup hook handles context loading automatically
-	if err := t.SendKeys(DeaconSessionName, "claude --dangerously-skip-permissions"); err != nil {
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
+	if err := t.SendKeys(DeaconSessionName, "export GT_ROLE=deacon && claude --dangerously-skip-permissions"); err != nil {
 		return fmt.Errorf("sending command: %w", err)
 	}
 

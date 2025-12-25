@@ -50,8 +50,9 @@ var (
 )
 
 var mqCmd = &cobra.Command{
-	Use:   "mq",
-	Short: "Merge queue operations",
+	Use:     "mq",
+	GroupID: GroupWork,
+	Short:   "Merge queue operations",
 	Long: `Manage the merge queue for a rig.
 
 The merge queue tracks work branches from polecats waiting to be merged.

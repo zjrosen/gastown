@@ -21,8 +21,9 @@ var (
 )
 
 var stopCmd = &cobra.Command{
-	Use:   "stop",
-	Short: "Emergency stop for sessions",
+	Use:     "stop",
+	GroupID: GroupServices,
+	Short:   "Emergency stop for sessions",
 	Long: `Emergency stop command for Gas Town sessions.
 
 Stops all running polecat sessions across rigs. Use for emergency shutdown

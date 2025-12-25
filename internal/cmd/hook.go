@@ -12,8 +12,9 @@ import (
 )
 
 var hookCmd = &cobra.Command{
-	Use:   "hook <bead-id>",
-	Short: "Attach work to your hook (durable across restarts)",
+	Use:     "hook <bead-id>",
+	GroupID: GroupWork,
+	Short:   "Attach work to your hook (durable across restarts)",
 	Long: `Attach a bead (issue) to your hook for durable work tracking.
 
 The hook is the "durability primitive" - work on your hook survives session

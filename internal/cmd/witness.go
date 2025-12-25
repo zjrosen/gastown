@@ -22,8 +22,9 @@ var (
 )
 
 var witnessCmd = &cobra.Command{
-	Use:   "witness",
-	Short: "Manage the polecat monitoring agent",
+	Use:     "witness",
+	GroupID: GroupAgents,
+	Short:   "Manage the polecat monitoring agent",
 	Long: `Manage the Witness monitoring agent for a rig.
 
 The Witness monitors polecats for stuck/idle state, nudges polecats
@@ -330,7 +331,8 @@ func ensureWitnessSession(rigName string, r *rig.Rig) (bool, error) {
 	// Launch Claude directly (no shell respawn loop)
 	// Restarts are handled by daemon via LIFECYCLE mail or deacon health-scan
 	// NOTE: No gt prime injection needed - SessionStart hook handles it automatically
-	if err := t.SendKeys(sessionName, "claude --dangerously-skip-permissions"); err != nil {
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
+	if err := t.SendKeys(sessionName, "export GT_ROLE=witness && claude --dangerously-skip-permissions"); err != nil {
 		return false, fmt.Errorf("sending command: %w", err)
 	}
 

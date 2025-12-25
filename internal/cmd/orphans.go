@@ -15,8 +15,9 @@ import (
 )
 
 var orphansCmd = &cobra.Command{
-	Use:   "orphans",
-	Short: "Find lost polecat work",
+	Use:     "orphans",
+	GroupID: GroupWork,
+	Short:   "Find lost polecat work",
 	Long: `Find orphaned commits that were never merged to main.
 
 Polecat work can get lost when:

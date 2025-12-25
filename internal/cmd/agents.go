@@ -59,6 +59,7 @@ var AgentTypeIcons = map[AgentType]string{
 var agentsCmd = &cobra.Command{
 	Use:     "agents",
 	Aliases: []string{"ag"},
+	GroupID: GroupAgents,
 	Short:   "Switch between Gas Town agent sessions",
 	Long: `Display a popup menu of core Gas Town agent sessions.
 

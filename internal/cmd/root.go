@@ -32,9 +32,35 @@ func Execute() {
 	}
 }
 
+// Command group IDs - used by subcommands to organize help output
+const (
+	GroupWork      = "work"
+	GroupAgents    = "agents"
+	GroupComm      = "comm"
+	GroupServices  = "services"
+	GroupWorkspace = "workspace"
+	GroupConfig    = "config"
+	GroupDiag      = "diag"
+)
+
 func init() {
 	// Enable prefix matching for subcommands (e.g., "gt ref at" -> "gt refinery attach")
 	cobra.EnablePrefixMatching = true
+
+	// Define command groups (order determines help output order)
+	rootCmd.AddGroup(
+		&cobra.Group{ID: GroupWork, Title: "Work Management:"},
+		&cobra.Group{ID: GroupAgents, Title: "Agent Management:"},
+		&cobra.Group{ID: GroupComm, Title: "Communication:"},
+		&cobra.Group{ID: GroupServices, Title: "Services:"},
+		&cobra.Group{ID: GroupWorkspace, Title: "Workspace:"},
+		&cobra.Group{ID: GroupConfig, Title: "Configuration:"},
+		&cobra.Group{ID: GroupDiag, Title: "Diagnostics:"},
+	)
+
+	// Put help and completion in a sensible group
+	rootCmd.SetHelpCommandGroupID(GroupDiag)
+	rootCmd.SetCompletionCommandGroupID(GroupConfig)
 
 	// Global flags can be added here
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file")

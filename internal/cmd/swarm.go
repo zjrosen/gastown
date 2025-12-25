@@ -34,8 +34,9 @@ var (
 )
 
 var swarmCmd = &cobra.Command{
-	Use:   "swarm",
-	Short: "Manage multi-agent swarms",
+	Use:     "swarm",
+	GroupID: GroupWork,
+	Short:   "Manage multi-agent swarms",
 	Long: `Manage coordinated multi-agent work units (swarms).
 
 A swarm coordinates multiple polecats working on related tasks from a shared

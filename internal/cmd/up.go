@@ -17,8 +17,9 @@ import (
 )
 
 var upCmd = &cobra.Command{
-	Use:   "up",
-	Short: "Bring up all Gas Town services",
+	Use:     "up",
+	GroupID: GroupServices,
+	Short:   "Bring up all Gas Town services",
 	Long: `Start all Gas Town long-lived services.
 
 This is the idempotent "boot" command for Gas Town. It ensures all
@@ -213,12 +214,13 @@ func ensureSession(t *tmux.Tmux, sessionName, workDir, role string) error {
 	}
 
 	// Launch Claude
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
 	var claudeCmd string
 	if role == "deacon" {
 		// Deacon uses respawn loop
-		claudeCmd = `while true; do echo "⛪ Starting Deacon session..."; claude --dangerously-skip-permissions; echo ""; echo "Deacon exited. Restarting in 2s... (Ctrl-C to stop)"; sleep 2; done`
+		claudeCmd = `export GT_ROLE=deacon && while true; do echo "⛪ Starting Deacon session..."; claude --dangerously-skip-permissions; echo ""; echo "Deacon exited. Restarting in 2s... (Ctrl-C to stop)"; sleep 2; done`
 	} else {
-		claudeCmd = `claude --dangerously-skip-permissions`
+		claudeCmd = fmt.Sprintf(`export GT_ROLE=%s && claude --dangerously-skip-permissions`, role)
 	}
 
 	if err := t.SendKeysDelayed(sessionName, claudeCmd, 200); err != nil {
@@ -252,7 +254,8 @@ func ensureWitness(t *tmux.Tmux, sessionName, rigPath, rigName string) error {
 	_ = t.ConfigureGasTownSession(sessionName, theme, "", "Witness", rigName)
 
 	// Launch Claude
-	claudeCmd := `claude --dangerously-skip-permissions`
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
+	claudeCmd := `export GT_ROLE=witness && claude --dangerously-skip-permissions`
 	if err := t.SendKeysDelayed(sessionName, claudeCmd, 200); err != nil {
 		return err
 	}

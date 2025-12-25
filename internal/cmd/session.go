@@ -34,6 +34,7 @@ var (
 var sessionCmd = &cobra.Command{
 	Use:     "session",
 	Aliases: []string{"sess"},
+	GroupID: GroupAgents,
 	Short:   "Manage polecat sessions",
 	Long: `Manage tmux sessions for polecats.
 

@@ -19,8 +19,9 @@ var (
 )
 
 var themeCmd = &cobra.Command{
-	Use:   "theme [name]",
-	Short: "View or set tmux theme for the current rig",
+	Use:     "theme [name]",
+	GroupID: GroupConfig,
+	Short:   "View or set tmux theme for the current rig",
 	Long: `Manage tmux status bar themes for Gas Town sessions.
 
 Without arguments, shows the current theme assignment.

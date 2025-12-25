@@ -30,6 +30,7 @@ var (
 var polecatCmd = &cobra.Command{
 	Use:     "polecat",
 	Aliases: []string{"cat", "polecats"},
+	GroupID: GroupAgents,
 	Short:   "Manage polecats in rigs",
 	Long: `Manage polecat lifecycle in rigs.
 

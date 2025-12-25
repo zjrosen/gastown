@@ -26,8 +26,9 @@ var (
 )
 
 var installCmd = &cobra.Command{
-	Use:   "install [path]",
-	Short: "Create a new Gas Town HQ (workspace)",
+	Use:     "install [path]",
+	GroupID: GroupWorkspace,
+	Short:   "Create a new Gas Town HQ (workspace)",
 	Long: `Create a new Gas Town HQ at the specified path.
 
 The HQ (headquarters) is the top-level directory where Gas Town is installed -

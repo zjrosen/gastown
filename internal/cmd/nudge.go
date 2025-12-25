@@ -14,8 +14,9 @@ func init() {
 }
 
 var nudgeCmd = &cobra.Command{
-	Use:   "nudge <rig/polecat> <message>",
-	Short: "Send a message to a polecat session reliably",
+	Use:     "nudge <rig/polecat> <message>",
+	GroupID: GroupComm,
+	Short:   "Send a message to a polecat session reliably",
 	Long: `Sends a message to a polecat's Claude Code session.
 
 Uses a reliable delivery pattern:

@@ -21,8 +21,9 @@ var (
 )
 
 var moleculeCmd = &cobra.Command{
-	Use:     "molecule",
-	Aliases: []string{"mol"},
+	Use:     "mol",
+	Aliases: []string{"molecule"},
+	GroupID: GroupWork,
 	Short:   "Molecule workflow commands",
 	Long: `Manage molecule workflow templates.
 

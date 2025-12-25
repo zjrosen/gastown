@@ -23,6 +23,7 @@ var (
 var refineryCmd = &cobra.Command{
 	Use:     "refinery",
 	Aliases: []string{"ref"},
+	GroupID: GroupAgents,
 	Short:   "Manage the merge queue processor",
 	Long: `Manage the Refinery merge queue processor for a rig.
 

@@ -15,8 +15,9 @@ import (
 var initForce bool
 
 var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "Initialize current directory as a Gas Town rig",
+	Use:     "init",
+	GroupID: GroupWorkspace,
+	Short:   "Initialize current directory as a Gas Town rig",
 	Long: `Initialize the current directory for use as a Gas Town rig.
 
 This creates the standard agent directories (polecats/, witness/, refinery/,

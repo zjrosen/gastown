@@ -23,8 +23,9 @@ import (
 )
 
 var rigCmd = &cobra.Command{
-	Use:   "rig",
-	Short: "Manage rigs in the workspace",
+	Use:     "rig",
+	GroupID: GroupWorkspace,
+	Short:   "Manage rigs in the workspace",
 	Long: `Manage rigs (project containers) in the Gas Town workspace.
 
 A rig is a container for managing a project and its agents:

@@ -14,8 +14,9 @@ import (
 )
 
 var daemonCmd = &cobra.Command{
-	Use:   "daemon",
-	Short: "Manage the Gas Town daemon",
+	Use:     "daemon",
+	GroupID: GroupServices,
+	Short:   "Manage the Gas Town daemon",
 	Long: `Manage the Gas Town background daemon.
 
 The daemon is a simple Go process that:

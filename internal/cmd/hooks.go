@@ -18,8 +18,9 @@ var (
 )
 
 var hooksCmd = &cobra.Command{
-	Use:   "hooks",
-	Short: "List all Claude Code hooks in the workspace",
+	Use:     "hooks",
+	GroupID: GroupConfig,
+	Short:   "List all Claude Code hooks in the workspace",
 	Long: `List all Claude Code hooks configured in the workspace.
 
 Scans for .claude/settings.json files and displays hooks by type.

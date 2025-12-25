@@ -17,6 +17,7 @@ const MayorSessionName = "gt-mayor"
 var mayorCmd = &cobra.Command{
 	Use:     "mayor",
 	Aliases: []string{"may"},
+	GroupID: GroupAgents,
 	Short:   "Manage the Mayor session",
 	Long: `Manage the Mayor tmux session.
 
@@ -126,7 +127,8 @@ func startMayorSession(t *tmux.Tmux) error {
 
 	// Launch Claude - the startup hook handles 'gt prime' automatically
 	// Use SendKeysDelayed to allow shell initialization after NewSession
-	claudeCmd := `claude --dangerously-skip-permissions`
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
+	claudeCmd := `export GT_ROLE=mayor && claude --dangerously-skip-permissions`
 	if err := t.SendKeysDelayed(MayorSessionName, claudeCmd, 200); err != nil {
 		return fmt.Errorf("sending command: %w", err)
 	}

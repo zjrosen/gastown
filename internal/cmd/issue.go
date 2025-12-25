@@ -9,8 +9,9 @@ import (
 )
 
 var issueCmd = &cobra.Command{
-	Use:   "issue",
-	Short: "Manage current issue for status line display",
+	Use:     "issue",
+	GroupID: GroupConfig,
+	Short:   "Manage current issue for status line display",
 }
 
 var issueSetCmd = &cobra.Command{

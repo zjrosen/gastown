@@ -15,8 +15,9 @@ var (
 )
 
 var versionCmd = &cobra.Command{
-	Use:   "version",
-	Short: "Print version information",
+	Use:     "version",
+	GroupID: GroupDiag,
+	Short:   "Print version information",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(style.Bold.Render("gt") + " - Gas Town CLI")
 		fmt.Printf("Version:  %s\n", Version)

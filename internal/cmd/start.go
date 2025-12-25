@@ -31,8 +31,9 @@ var (
 )
 
 var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Start Gas Town",
+	Use:     "start",
+	GroupID: GroupServices,
+	Short:   "Start Gas Town",
 	Long: `Start Gas Town by launching the Deacon and Mayor.
 
 The Deacon is the health-check orchestrator that monitors Mayor and Witnesses.
@@ -46,8 +47,9 @@ To stop Gas Town, use 'gt shutdown'.`,
 }
 
 var shutdownCmd = &cobra.Command{
-	Use:   "shutdown",
-	Short: "Shutdown Gas Town",
+	Use:     "shutdown",
+	GroupID: GroupServices,
+	Short:   "Shutdown Gas Town",
 	Long: `Shutdown Gas Town by stopping agents and cleaning up polecats.
 
 By default, preserves crew sessions (your persistent workspaces).
@@ -240,7 +242,8 @@ func ensureRefinerySession(rigName string, r *rig.Rig) (bool, error) {
 	_ = t.ConfigureGasTownSession(sessionName, theme, rigName, "refinery", "refinery")
 
 	// Launch Claude in a respawn loop
-	loopCmd := `while true; do echo "🛢️ Starting Refinery for ` + rigName + `..."; claude --dangerously-skip-permissions; echo ""; echo "Refinery exited. Restarting in 2s... (Ctrl-C to stop)"; sleep 2; done`
+	// Export GT_ROLE in the command since tmux SetEnvironment only affects new panes
+	loopCmd := `export GT_ROLE=refinery && while true; do echo "🛢️ Starting Refinery for ` + rigName + `..."; claude --dangerously-skip-permissions; echo ""; echo "Refinery exited. Restarting in 2s... (Ctrl-C to stop)"; sleep 2; done`
 	if err := t.SendKeysDelayed(sessionName, loopCmd, 200); err != nil {
 		return false, fmt.Errorf("sending command: %w", err)
 	}

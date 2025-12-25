@@ -16,8 +16,9 @@ import (
 )
 
 var doneCmd = &cobra.Command{
-	Use:   "done",
-	Short: "Signal work ready for merge queue",
+	Use:     "done",
+	GroupID: GroupWork,
+	Short:   "Signal work ready for merge queue",
 	Long: `Signal that your work is complete and ready for the merge queue.
 
 This is a convenience command for polecats that:

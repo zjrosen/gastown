@@ -18,8 +18,9 @@ var (
 )
 
 var gitInitCmd = &cobra.Command{
-	Use:   "git-init",
-	Short: "Initialize git repository for a Gas Town HQ",
+	Use:     "git-init",
+	GroupID: GroupWorkspace,
+	Short:   "Initialize git repository for a Gas Town HQ",
 	Long: `Initialize or configure git for an existing Gas Town HQ.
 
 This command:

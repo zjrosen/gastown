@@ -18,8 +18,9 @@ var (
 )
 
 var namepoolCmd = &cobra.Command{
-	Use:   "namepool",
-	Short: "Manage polecat name pools",
+	Use:     "namepool",
+	GroupID: GroupWorkspace,
+	Short:   "Manage polecat name pools",
 	Long: `Manage themed name pools for polecats in Gas Town.
 
 By default, polecats get themed names from the Mad Max universe

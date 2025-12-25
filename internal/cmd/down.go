@@ -12,8 +12,9 @@ import (
 )
 
 var downCmd = &cobra.Command{
-	Use:   "down",
-	Short: "Stop all Gas Town services",
+	Use:     "down",
+	GroupID: GroupServices,
+	Short:   "Stop all Gas Town services",
 	Long: `Stop all Gas Town long-lived services.
 
 This gracefully shuts down all infrastructure agents:
