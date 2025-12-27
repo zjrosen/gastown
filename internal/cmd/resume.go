@@ -8,7 +8,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/steveyegge/gastown/internal/style"
-	"github.com/steveyegge/gastown/internal/wisp"
 )
 
 // Resume command checks for cleared gates and resumes parked work.
@@ -142,17 +141,16 @@ func runResume(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	// Restore hook if we have a bead
+	// Pin the bead to restore work
 	if parked.BeadID != "" {
-		hook := wisp.NewSlungWork(parked.BeadID, agentID)
-		hook.Formula = parked.Formula
-		hook.Context = parked.Context
-
-		if err := wisp.WriteSlungWork(cloneRoot, agentID, hook); err != nil {
-			return fmt.Errorf("restoring hook: %w", err)
+		pinCmd := exec.Command("bd", "update", parked.BeadID, "--status=pinned", "--assignee="+agentID)
+		pinCmd.Dir = cloneRoot
+		pinCmd.Stderr = os.Stderr
+		if err := pinCmd.Run(); err != nil {
+			return fmt.Errorf("pinning bead: %w", err)
 		}
 
-		fmt.Printf("\n%s Restored work: %s\n", style.Bold.Render("🪝"), parked.BeadID)
+		fmt.Printf("\n%s Restored work: %s\n", style.Bold.Render("📌"), parked.BeadID)
 		if parked.Formula != "" {
 			fmt.Printf("  Formula: %s\n", parked.Formula)
 		}
