@@ -59,10 +59,13 @@ Before killing ANY polecat session, verify:
    Polecat: <polecat>
    Verified: clean git state, issue closed"
    ```
-2. **Kill session**: `tmux kill-session -t gt-{{RIG}}-<name>`
-3. Remove worktree: `git worktree remove polecats/<name>` (if ephemeral)
-4. Delete branch: `git branch -d polecat/<name>` (if ephemeral)
-5. **Notify Mayor** (for tracking):
+2. **Nuke the polecat** (kills session, removes worktree, deletes branch):
+   ```bash
+   gt polecat nuke {{RIG}}/<name>
+   ```
+   NOTE: Use `gt polecat nuke` instead of raw git commands. It knows the correct
+   worktree parent repo (mayor/rig or .repo.git) and handles cleanup properly.
+3. **Notify Mayor** (for tracking):
    ```bash
    gt mail send mayor/ -s "Polecat <name> processed" -m "Work: <issue>
    MR sent to refinery for branch: <branch>"
