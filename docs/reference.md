@@ -222,6 +222,16 @@ gt mail send <addr> -s "Subject" -m "Body"
 gt mail send --human -s "..."    # To overseer
 ```
 
+### Escalation
+```bash
+gt escalate "topic"              # Default: MEDIUM severity
+gt escalate -s CRITICAL "msg"    # Urgent, immediate attention
+gt escalate -s HIGH "msg"        # Important blocker
+gt escalate -s MEDIUM "msg" -m "Details..."
+```
+
+See [escalation.md](escalation.md) for full protocol.
+
 ### Sessions
 ```bash
 gt handoff                   # Request cycle (context-aware)
