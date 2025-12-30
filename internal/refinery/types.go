@@ -44,9 +44,6 @@ type Refinery struct {
 
 	// LastMergeAt is when the last successful merge happened.
 	LastMergeAt *time.Time `json:"last_merge_at,omitempty"`
-
-	// Stats contains cumulative statistics.
-	Stats RefineryStats `json:"stats"`
 }
 
 // MergeRequest represents a branch waiting to be merged.
@@ -148,24 +145,6 @@ func DefaultMergeConfig() MergeConfig {
 		PushRetryCount:       3,
 		PushRetryDelayMs:     1000,
 	}
-}
-
-// RefineryStats contains cumulative refinery statistics.
-type RefineryStats struct {
-	// TotalMerged is the total number of successful merges.
-	TotalMerged int `json:"total_merged"`
-
-	// TotalFailed is the total number of failed merges.
-	TotalFailed int `json:"total_failed"`
-
-	// TotalSkipped is the total number of skipped MRs.
-	TotalSkipped int `json:"total_skipped"`
-
-	// TodayMerged is the number of merges today.
-	TodayMerged int `json:"today_merged"`
-
-	// TodayFailed is the number of failures today.
-	TodayFailed int `json:"today_failed"`
 }
 
 // QueueItem represents an item in the merge queue for display.

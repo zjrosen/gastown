@@ -259,10 +259,6 @@ func runWitnessStatus(cmd *cobra.Command, args []string) error {
 		fmt.Printf("  Started: %s\n", w.StartedAt.Format("2006-01-02 15:04:05"))
 	}
 
-	if w.LastCheckAt != nil {
-		fmt.Printf("  Last check: %s\n", w.LastCheckAt.Format("2006-01-02 15:04:05"))
-	}
-
 	// Show monitored polecats
 	fmt.Printf("\n  %s\n", style.Bold.Render("Monitored Polecats:"))
 	if len(w.MonitoredPolecats) == 0 {
@@ -272,13 +268,6 @@ func runWitnessStatus(cmd *cobra.Command, args []string) error {
 			fmt.Printf("    • %s\n", p)
 		}
 	}
-
-	fmt.Printf("\n  %s\n", style.Bold.Render("Statistics:"))
-	fmt.Printf("    Checks today:      %d\n", w.Stats.TodayChecks)
-	fmt.Printf("    Nudges today:      %d\n", w.Stats.TodayNudges)
-	fmt.Printf("    Total checks:      %d\n", w.Stats.TotalChecks)
-	fmt.Printf("    Total nudges:      %d\n", w.Stats.TotalNudges)
-	fmt.Printf("    Total escalations: %d\n", w.Stats.TotalEscalations)
 
 	return nil
 }

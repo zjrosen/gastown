@@ -36,12 +36,6 @@ type Witness struct {
 	// MonitoredPolecats tracks polecats being monitored.
 	MonitoredPolecats []string `json:"monitored_polecats,omitempty"`
 
-	// LastCheckAt is when the last health check was performed.
-	LastCheckAt *time.Time `json:"last_check_at,omitempty"`
-
-	// Stats contains cumulative statistics.
-	Stats WitnessStats `json:"stats"`
-
 	// Config contains auto-spawn configuration.
 	Config WitnessConfig `json:"config"`
 
@@ -67,21 +61,4 @@ type WitnessConfig struct {
 	IssuePrefix string `json:"issue_prefix,omitempty"`
 }
 
-// WitnessStats contains cumulative witness statistics.
-type WitnessStats struct {
-	// TotalChecks is the total number of health checks performed.
-	TotalChecks int `json:"total_checks"`
-
-	// TotalNudges is the total number of nudges sent to polecats.
-	TotalNudges int `json:"total_nudges"`
-
-	// TotalEscalations is the total number of escalations to mayor.
-	TotalEscalations int `json:"total_escalations"`
-
-	// TodayChecks is the number of checks today.
-	TodayChecks int `json:"today_checks"`
-
-	// TodayNudges is the number of nudges today.
-	TodayNudges int `json:"today_nudges"`
-}
 

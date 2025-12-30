@@ -492,7 +492,7 @@ func (m *Manager) ProcessMR(mr *MergeRequest) MergeResult {
 	return result
 }
 
-// completeMR marks an MR as complete and updates stats.
+// completeMR marks an MR as complete.
 // For success, pass closeReason (e.g., CloseReasonMerged).
 // For failures that should return to open, pass empty closeReason.
 func (m *Manager) completeMR(mr *MergeRequest, closeReason CloseReason, errMsg string) {
@@ -512,16 +512,9 @@ func (m *Manager) completeMR(mr *MergeRequest, closeReason CloseReason, errMsg s
 		switch closeReason {
 		case CloseReasonMerged:
 			ref.LastMergeAt = &now
-			ref.Stats.TotalMerged++
-			ref.Stats.TodayMerged++
 		case CloseReasonSuperseded:
-			ref.Stats.TotalSkipped++
 			// Emit merge_skipped event
 			_ = events.LogFeed(events.TypeMergeSkipped, actor, events.MergePayload(mr.ID, mr.Worker, mr.Branch, "superseded"))
-		default:
-			// Other close reasons (rejected, conflict) count as failed
-			ref.Stats.TotalFailed++
-			ref.Stats.TodayFailed++
 		}
 	} else {
 		// Reopen the MR for rework (in_progress → open)
@@ -529,8 +522,6 @@ func (m *Manager) completeMR(mr *MergeRequest, closeReason CloseReason, errMsg s
 			// Log error but continue
 			fmt.Fprintf(m.output, "Warning: failed to reopen MR: %v\n", err)
 		}
-		ref.Stats.TotalFailed++
-		ref.Stats.TodayFailed++
 	}
 
 	_ = m.saveState(ref) // non-fatal: state file update

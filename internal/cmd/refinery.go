@@ -277,12 +277,6 @@ func runRefineryStatus(cmd *cobra.Command, args []string) error {
 		fmt.Printf("  Last merge: %s\n", ref.LastMergeAt.Format("2006-01-02 15:04:05"))
 	}
 
-	fmt.Printf("\n  %s\n", style.Bold.Render("Statistics:"))
-	fmt.Printf("    Merged today:  %d\n", ref.Stats.TodayMerged)
-	fmt.Printf("    Failed today:  %d\n", ref.Stats.TodayFailed)
-	fmt.Printf("    Total merged:  %d\n", ref.Stats.TotalMerged)
-	fmt.Printf("    Total failed:  %d\n", ref.Stats.TotalFailed)
-
 	return nil
 }
 
