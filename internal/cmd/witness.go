@@ -192,12 +192,13 @@ func runWitnessStop(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// Kill tmux session if it exists
+	// Kill tmux session if it exists.
+	// Use KillSessionWithProcesses to ensure all descendant processes are killed.
 	t := tmux.NewTmux()
 	sessionName := witnessSessionName(rigName)
 	running, _ := t.HasSession(sessionName)
 	if running {
-		if err := t.KillSession(sessionName); err != nil {
+		if err := t.KillSessionWithProcesses(sessionName); err != nil {
 			style.PrintWarning("failed to kill session: %v", err)
 		}
 	}

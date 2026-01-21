@@ -179,7 +179,9 @@ func (d *Daemon) executeLifecycleAction(request *LifecycleRequest) error {
 	switch request.Action {
 	case ActionShutdown:
 		if running {
-			if err := d.tmux.KillSession(sessionName); err != nil {
+			// Use KillSessionWithProcesses to ensure all descendant processes are killed.
+			// This prevents orphan bash processes from Claude's Bash tool surviving session termination.
+			if err := d.tmux.KillSessionWithProcesses(sessionName); err != nil {
 				return fmt.Errorf("killing session: %w", err)
 			}
 			d.logger.Printf("Killed session %s", sessionName)
@@ -188,8 +190,8 @@ func (d *Daemon) executeLifecycleAction(request *LifecycleRequest) error {
 
 	case ActionCycle, ActionRestart:
 		if running {
-			// Kill the session first
-			if err := d.tmux.KillSession(sessionName); err != nil {
+			// Kill the session first - use KillSessionWithProcesses to prevent orphan processes.
+			if err := d.tmux.KillSessionWithProcesses(sessionName); err != nil {
 				return fmt.Errorf("killing session: %w", err)
 			}
 			d.logger.Printf("Killed session %s for restart", sessionName)

@@ -430,9 +430,10 @@ func (d *Daemon) checkDeaconHeartbeat() {
 
 	// Session exists but heartbeat is stale - Deacon is stuck
 	if age > 30*time.Minute {
-		// Very stuck - restart the session
+		// Very stuck - restart the session.
+		// Use KillSessionWithProcesses to ensure all descendant processes are killed.
 		d.logger.Printf("Deacon stuck for %s - restarting session", age.Round(time.Minute))
-		if err := d.tmux.KillSession(sessionName); err != nil {
+		if err := d.tmux.KillSessionWithProcesses(sessionName); err != nil {
 			d.logger.Printf("Error killing stuck Deacon: %v", err)
 		}
 		// ensureDeaconRunning will restart on next heartbeat

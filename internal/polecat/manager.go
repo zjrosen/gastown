@@ -729,12 +729,13 @@ func (m *Manager) ReconcilePoolWith(namesWithDirs, namesWithSessions []string) {
 		dirSet[name] = true
 	}
 
-	// Kill orphaned sessions (session exists but no directory)
+	// Kill orphaned sessions (session exists but no directory).
+	// Use KillSessionWithProcesses to ensure all descendant processes are killed.
 	if m.tmux != nil {
 		for _, name := range namesWithSessions {
 			if !dirSet[name] {
 				sessionName := fmt.Sprintf("gt-%s-%s", m.rig.Name, name)
-				_ = m.tmux.KillSession(sessionName)
+				_ = m.tmux.KillSessionWithProcesses(sessionName)
 			}
 		}
 	}
